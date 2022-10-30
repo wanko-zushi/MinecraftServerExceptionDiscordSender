@@ -5,9 +5,20 @@ plugins {
 group = "dev.s7a"
 version = "1.0.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
+allprojects {
+    apply(plugin = "java")
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly("org.jetbrains:annotations:23.0.0")
+    }
 }
 
-dependencies {
+subprojects {
+    dependencies {
+        implementation(project(":"))
+    }
 }
