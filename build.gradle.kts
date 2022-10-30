@@ -19,6 +19,11 @@ allprojects {
     dependencies {
         compileOnly("org.jetbrains:annotations:23.0.0")
     }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
 subprojects {
