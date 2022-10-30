@@ -26,7 +26,7 @@ task<LaunchMinecraftServerTask>("testPlugin") {
 
     doFirst {
         copy {
-            from(buildDir.resolve("libs/${project.name}.jar"))
+            from(buildDir.resolve("libs/MinecraftServerExceptionDiscordSender.jar"))
             into(buildDir.resolve("MinecraftServer/plugins"))
         }
     }
