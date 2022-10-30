@@ -1,14 +1,9 @@
 package dev.s7a.mseds;
 
-public class MinecraftServerExceptionDiscordSender {
-    public static void setup() {
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler());
-    }
+import org.jetbrains.annotations.NotNull;
 
-    public static class ExceptionHandler implements Thread.UncaughtExceptionHandler {
-        @Override
-        public void uncaughtException(Thread t, Throwable e) {
-            System.out.println("uncaught exception");
-        }
+public class MinecraftServerExceptionDiscordSender {
+    public static void send(@NotNull Throwable throwable) {
+        System.out.println("Uncaught exception: " + throwable);
     }
 }
