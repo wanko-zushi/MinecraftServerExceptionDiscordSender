@@ -12,7 +12,6 @@ repositories {
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.1.1")
     annotationProcessor("com.velocitypowered:velocity-api:3.1.1")
-    compileOnly("org.apache.logging.log4j:log4j-core:2.19.0")
 }
 
 tasks {
