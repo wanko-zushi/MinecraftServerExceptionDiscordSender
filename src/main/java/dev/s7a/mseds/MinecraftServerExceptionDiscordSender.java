@@ -6,7 +6,13 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.jetbrains.annotations.NotNull;
 
 public class MinecraftServerExceptionDiscordSender {
-    public static void setup() {
+    private final String url;
+
+    public MinecraftServerExceptionDiscordSender(@NotNull String url) {
+        this.url = url;
+    }
+
+    public void setup() {
         LoggerContext context = LoggerContext.getContext(false);
         Appender appender = MinecraftServerExceptionDiscordSenderAppender.createAppender(null, null, false, null);
         appender.start();
