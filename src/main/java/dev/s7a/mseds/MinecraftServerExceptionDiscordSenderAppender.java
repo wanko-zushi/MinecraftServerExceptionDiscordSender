@@ -25,4 +25,3 @@ public class MinecraftServerExceptionDiscordSenderAppender extends AbstractAppen
         }
     }
 }
-
