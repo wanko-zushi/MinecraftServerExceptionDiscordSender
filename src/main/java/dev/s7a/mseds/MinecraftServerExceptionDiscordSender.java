@@ -5,6 +5,9 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 public class MinecraftServerExceptionDiscordSender {
     private final String url;
 
@@ -22,6 +25,14 @@ public class MinecraftServerExceptionDiscordSender {
     }
 
     static void send(@NotNull Throwable throwable) {
-        System.out.println("Uncaught exception: " + throwable);
+        System.out.println("Uncaught exception: " + getStackTrace(throwable));
+    }
+
+    private static @NotNull String getStackTrace(@NotNull Throwable throwable) {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        throwable.printStackTrace(printWriter);
+        printWriter.flush();
+        return stringWriter.toString();
     }
 }
