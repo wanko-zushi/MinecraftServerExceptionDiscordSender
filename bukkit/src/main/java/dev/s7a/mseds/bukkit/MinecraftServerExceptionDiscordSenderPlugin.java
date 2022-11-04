@@ -12,8 +12,7 @@ public class MinecraftServerExceptionDiscordSenderPlugin extends JavaPlugin {
         if (url != null && !url.isEmpty()) {
             new MinecraftServerExceptionDiscordSender(url).setup();
         } else {
-            getLogger().severe("webhook_url is empty. Please check config.yml");
-            getServer().getPluginManager().disablePlugin(this);
+            throw new RuntimeException("webhook_url is empty. Please check config.yml");
         }
     }
 }
