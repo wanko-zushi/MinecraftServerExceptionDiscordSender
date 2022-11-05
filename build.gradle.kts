@@ -45,4 +45,5 @@ subprojects {
 
 dependencies {
     compileOnly("org.apache.logging.log4j:log4j-core:2.19.0")
+    compileOnly("com.google.code.gson:gson:2.10")
 }
