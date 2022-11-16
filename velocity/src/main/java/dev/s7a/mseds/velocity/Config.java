@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 public class Config implements MinecraftServerExceptionDiscordSenderConfig {
-    private CommentedConfig config;
+    private final CommentedConfig config;
 
     public Config(@NotNull MinecraftServerExceptionDiscordSenderPlugin plugin, @NotNull File dataFolder) throws IOException {
         String fileName = "config.toml";

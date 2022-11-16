@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Config implements MinecraftServerExceptionDiscordSenderConfig {
-    Configuration configuration;
+    private final Configuration configuration;
 
     public Config(@NotNull Plugin plugin) throws IOException {
         File file = new File(plugin.getDataFolder(), "config.yml");

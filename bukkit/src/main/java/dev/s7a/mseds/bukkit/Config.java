@@ -6,7 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
 public class Config implements MinecraftServerExceptionDiscordSenderConfig {
-    public FileConfiguration config;
+    private final FileConfiguration config;
 
     public Config(JavaPlugin plugin) {
         plugin.saveDefaultConfig();
