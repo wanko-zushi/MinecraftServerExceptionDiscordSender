@@ -3,6 +3,7 @@ package dev.s7a.mseds.velocity;
 import com.google.inject.Inject;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
+import dev.s7a.mseds.InvalidWebhookUrlException;
 import dev.s7a.mseds.MinecraftServerExceptionDiscordSender;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class MinecraftServerExceptionDiscordSenderPlugin {
         if (url != null && !url.isEmpty()) {
             new MinecraftServerExceptionDiscordSender(url).setup();
         } else {
-            throw new RuntimeException("webhook_url is empty. Please check config.toml");
+            throw new InvalidWebhookUrlException("webhook_url is empty. Please check config.toml");
         }
     }
 }
