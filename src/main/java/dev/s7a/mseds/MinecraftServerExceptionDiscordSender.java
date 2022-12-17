@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MinecraftServerExceptionDiscordSender {
+    private static final String SENDER_NAME = "MinecraftServerExceptionDiscordSender";
     private final URL url;
 
     public MinecraftServerExceptionDiscordSender(@NotNull String url) throws InvalidWebhookUrlException {
@@ -29,7 +30,7 @@ public class MinecraftServerExceptionDiscordSender {
 
     public void setup() {
         LoggerContext context = LoggerContext.getContext(false);
-        Appender appender = new AbstractAppender("MinecraftServerExceptionDiscordSender", null, null, false, null) {
+        Appender appender = new AbstractAppender(SENDER_NAME, null, null, false, null) {
             @Override
             public void append(LogEvent event) {
                 Throwable thrown = event.getThrown();
@@ -46,7 +47,7 @@ public class MinecraftServerExceptionDiscordSender {
 
     private void send(@NotNull Throwable throwable) {
         String stackTrace = getStackTrace(throwable);
-        if (stackTrace.contains("MinecraftServerExceptionDiscordSender")) {
+        if (stackTrace.contains(SENDER_NAME)) {
             // ignore self exception
             return;
         }
@@ -60,7 +61,7 @@ public class MinecraftServerExceptionDiscordSender {
         try {
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.addRequestProperty("Content-Type", "application/json");
-            connection.addRequestProperty("User-Agent", "MinecraftServerExceptionDiscordSender");
+            connection.addRequestProperty("User-Agent", SENDER_NAME);
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
             OutputStream stream = connection.getOutputStream();
