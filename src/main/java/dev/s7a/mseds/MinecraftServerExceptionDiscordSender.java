@@ -71,7 +71,7 @@ public class MinecraftServerExceptionDiscordSender {
             connection.getInputStream().close();
             connection.disconnect();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new WebhookSendException(e);
         }
     }
 
