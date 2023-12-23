@@ -34,9 +34,16 @@ webhook_url = ""
 
 ## Releases
 
-### [v1.0.0 (latest)](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.0)
-
 - `MinecraftServerExceptionDiscordSender.jar` : Support all platforms
 - `MinecraftServerExceptionDiscordSender-bukkit.jar` : Support Bukkit only
 - `MinecraftServerExceptionDiscordSender-bungee.jar` : Support BungeeCord only
 - `MinecraftServerExceptionDiscordSender-velocity.jar` : Support Velocity only
+
+### [v1.0.1 (latest)](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.1)
+
+- Support StackOverflowException
+  - Consider content limits for Discord webhooks
+
+### [v1.0.0](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.0)
+
+- First release :tada:
