@@ -1,0 +1,31 @@
+name: Build
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Build
+        run: ./gradlew build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build
+          path: |
+            all/build/MinecraftServerExceptionDiscordSender.jar
+            bukkit/build/MinecraftServerExceptionDiscordSender-bukkit.jar
+            bungee/build/MinecraftServerExceptionDiscordSender-bungee.jar
+            velocity/build/MinecraftServerExceptionDiscordSender-velocity.jar
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            all/build/MinecraftServerExceptionDiscordSender.jar
+            bukkit/build/MinecraftServerExceptionDiscordSender-bukkit.jar
+            bungee/build/MinecraftServerExceptionDiscordSender-bungee.jar
+            velocity/build/MinecraftServerExceptionDiscordSender-velocity.jar
