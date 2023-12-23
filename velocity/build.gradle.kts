@@ -12,7 +12,6 @@ repositories {
 dependencies {
     compileOnly(libs.velocity.api)
     annotationProcessor(libs.velocity.api)
-    compileOnly(libs.config.toml)
 }
 
 java {

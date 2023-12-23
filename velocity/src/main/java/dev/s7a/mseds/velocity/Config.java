@@ -1,8 +1,6 @@
 package dev.s7a.mseds.velocity;
 
-import com.electronwill.nightconfig.core.CommentedConfig;
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.toml.TomlFormat;
+import com.moandjiezana.toml.Toml;
 import dev.s7a.mseds.MinecraftServerExceptionDiscordSenderConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 public class Config implements MinecraftServerExceptionDiscordSenderConfig {
-    private final CommentedConfig config;
+    private final Toml config;
 
     public Config(@NotNull MinecraftServerExceptionDiscordSenderPlugin plugin, @NotNull File dataFolder) throws IOException {
         String fileName = "config.toml";
@@ -21,11 +19,11 @@ public class Config implements MinecraftServerExceptionDiscordSenderConfig {
             dataFolder.mkdirs();
             Files.copy(plugin.getClass().getClassLoader().getResourceAsStream(fileName), file.toPath());
         }
-        config = CommentedFileConfig.of(file, TomlFormat.instance());
+        config = new Toml().read(file);
     }
 
     @Override
     public @Nullable String getWebhookUrl() {
-        return config.get("webhook_url");
+        return config.getString("webhook_url");
     }
 }
