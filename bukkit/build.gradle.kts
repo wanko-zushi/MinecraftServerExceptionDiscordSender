@@ -3,7 +3,7 @@ import dev.s7a.gradle.minecraft.server.tasks.LaunchMinecraftServerTask.JarUrl
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 
 plugins {
-    id("net.minecrell.plugin-yml.bukkit") version "0.5.2"
+    alias(libs.plugins.plugin.yml.bukkit)
 }
 
 repositories {
@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
+    compileOnly(libs.spigot.api)
 }
 
 configure<BukkitPluginDescription> {

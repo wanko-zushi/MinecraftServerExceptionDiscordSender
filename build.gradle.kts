@@ -2,8 +2,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("java")
-    id("com.github.johnrengelman.shadow") version "7.1.2" apply false
-    id("dev.s7a.gradle.minecraft.server") version "2.0.0" apply false
+    alias(libs.plugins.shadow) apply false
+    alias(libs.plugins.minecraft.server) apply false
 }
 
 group = "dev.s7a"
@@ -16,8 +16,10 @@ allprojects {
         mavenCentral()
     }
 
-    dependencies {
-        compileOnly("org.jetbrains:annotations:23.0.0")
+    afterEvaluate {
+        dependencies {
+            compileOnly(libs.annotations)
+        }
     }
 
     java {
@@ -27,8 +29,10 @@ allprojects {
 }
 
 subprojects {
-    apply(plugin = "com.github.johnrengelman.shadow")
-    apply(plugin = "dev.s7a.gradle.minecraft.server")
+    afterEvaluate {
+        apply(plugin = libs.plugins.shadow.get().pluginId)
+        apply(plugin = libs.plugins.minecraft.server.get().pluginId)
+    }
 
     dependencies {
         implementation(project(":"))

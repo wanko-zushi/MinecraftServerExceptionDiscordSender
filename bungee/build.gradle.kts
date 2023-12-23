@@ -3,7 +3,7 @@ import dev.s7a.gradle.minecraft.server.tasks.LaunchMinecraftServerTask.JarUrl
 import net.minecrell.pluginyml.bungee.BungeePluginDescription
 
 plugins {
-    id("net.minecrell.plugin-yml.bungee") version "0.5.2"
+    alias(libs.plugins.plugin.yml.bungee)
 }
 
 repositories {
@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("net.md-5:bungeecord-api:1.19-R0.1-SNAPSHOT")
+    compileOnly(libs.bungeecord.api)
 }
 
 configure<BungeePluginDescription> {
