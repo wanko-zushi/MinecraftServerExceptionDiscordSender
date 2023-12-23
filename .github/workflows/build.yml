@@ -28,7 +28,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: my-artifact
+          name: Build
       - name: Get The Version
         id: version
         run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
