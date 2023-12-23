@@ -34,12 +34,24 @@ webhook_url = ""
 
 ## Releases
 
-- `MinecraftServerExceptionDiscordSender.jar` : Support all platforms
-- `MinecraftServerExceptionDiscordSender-bukkit.jar` : Support Bukkit only
-- `MinecraftServerExceptionDiscordSender-bungee.jar` : Support BungeeCord only
-- `MinecraftServerExceptionDiscordSender-velocity.jar` : Support Velocity only
+> **Files**
+>
+> - `MinecraftServerExceptionDiscordSender.jar` : Support all platforms
+> - `MinecraftServerExceptionDiscordSender-bukkit.jar` : Support Bukkit only
+> - `MinecraftServerExceptionDiscordSender-bungee.jar` : Support BungeeCord only
+> - `MinecraftServerExceptionDiscordSender-velocity.jar` : Support Velocity only
 
-### [v1.0.1 (latest)](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.1)
+### [v1.0.2 (latest)](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.2)
+
+#### Feature
+
+- Use custom username
+
+![](https://support.discord.com/hc/article_attachments/360101553853/Screen_Shot_2020-12-15_at_4.51.38_PM.png)
+
+### [v1.0.1](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.1)
+
+#### Fix
 
 - Support StackOverflowException
   - Consider content limits for Discord webhooks
