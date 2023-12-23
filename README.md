@@ -59,3 +59,36 @@ webhook_url = ""
 ### [v1.0.0](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.0)
 
 - First release :tada:
+
+## For developers
+
+### Project structure
+
+```mermaid
+flowchart LR
+    :all
+    subgraph :platforms 
+        :platform-bukkit[":bukkit"]
+        :platform-bungee[":bungee"]
+        :platform-velocity[":velocity"]
+    end
+    :common
+    subgraph :tests
+      :test-bukkit[":bukkit"]
+      :test-bungee[":bungee"]
+      :test-velocity[":velocity"]
+    end
+    
+    :all --"implementation"--> :platform-bukkit
+    :all --"implementation"--> :platform-bungee
+    :all --"implementation"--> :platform-velocity
+    :all --"testPluginBukkit"--> :test-bukkit
+    :all --"testPluginBungee"--> :test-bungee
+    :all --"testPluginVelocity"--> :test-velocity
+    :platform-bukkit --"testPlugin"--> :test-bukkit
+    :platform-bungee --"testPlugin"--> :test-bungee
+    :platform-velocity --"testPlugin"--> :test-velocity
+    :platform-bukkit --"implementation"--> :common
+    :platform-bungee --"implementation"--> :common
+    :platform-velocity --"implementation"--> :common
+```
