@@ -16,10 +16,10 @@ jobs:
         with:
           name: Build
           path: |
-            all/build/MinecraftServerExceptionDiscordSender.jar
-            bukkit/build/MinecraftServerExceptionDiscordSender-bukkit.jar
-            bungee/build/MinecraftServerExceptionDiscordSender-bungee.jar
-            velocity/build/MinecraftServerExceptionDiscordSender-velocity.jar
+            all/build/libs/MinecraftServerExceptionDiscordSender.jar
+            bukkit/build/libs/MinecraftServerExceptionDiscordSender-bukkit.jar
+            bungee/build/libs/MinecraftServerExceptionDiscordSender-bungee.jar
+            velocity/build/libs/MinecraftServerExceptionDiscordSender-velocity.jar
   release:
     needs: [build]
     runs-on: ubuntu-latest
