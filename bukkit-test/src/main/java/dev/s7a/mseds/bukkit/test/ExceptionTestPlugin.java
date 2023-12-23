@@ -9,5 +9,12 @@ public class ExceptionTestPlugin extends JavaPlugin {
         getServer().getScheduler().runTaskLater(this, () -> {
             throw new RuntimeException("Test exception (bukkit)");
         }, 100L);
+        getServer().getScheduler().runTaskLater(this, () -> {
+            recrusive();
+        }, 100L);
+    }
+
+    private void recrusive() {
+        recrusive();
     }
 }

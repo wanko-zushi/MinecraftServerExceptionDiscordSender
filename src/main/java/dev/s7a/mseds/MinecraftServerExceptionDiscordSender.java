@@ -53,7 +53,12 @@ public class MinecraftServerExceptionDiscordSender {
         }
         JsonObject json = new JsonObject();
         json.addProperty("username", "MinecraftServerException");
-        json.addProperty("content", stackTrace);
+        int contentLengthLimit = 1997; // https://birdie0.github.io/discord-webhooks-guide/other/field_limits.html
+        if (contentLengthLimit < stackTrace.length()) {
+            json.addProperty("content", stackTrace.substring(0, contentLengthLimit) + "...");
+        } else {
+            json.addProperty("content", stackTrace);
+        }
         send(json);
     }
 
