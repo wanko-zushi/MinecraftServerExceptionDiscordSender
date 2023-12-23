@@ -11,15 +11,17 @@ jobs:
           java-version: '21'
       - name: Build
         run: ./gradlew build
+      - name: Copy
+        run: |
+          cp all/build/libs/MinecraftServerExceptionDiscordSender.jar .
+          cp bukkit/build/libs/MinecraftServerExceptionDiscordSender-bukkit.jar .
+          cp bungee/build/libs/MinecraftServerExceptionDiscordSender-bungee.jar .
+          cp velocity/build/libs/MinecraftServerExceptionDiscordSender-velocity.jar .
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: Build
-          path: |
-            all/build/libs/MinecraftServerExceptionDiscordSender.jar
-            bukkit/build/libs/MinecraftServerExceptionDiscordSender-bukkit.jar
-            bungee/build/libs/MinecraftServerExceptionDiscordSender-bungee.jar
-            velocity/build/libs/MinecraftServerExceptionDiscordSender-velocity.jar
+          path: '*.jar'
   release:
     needs: [build]
     runs-on: ubuntu-latest
