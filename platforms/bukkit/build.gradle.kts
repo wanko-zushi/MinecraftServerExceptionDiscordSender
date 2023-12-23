@@ -24,7 +24,7 @@ configure<BukkitPluginDescription> {
 
 task<LaunchMinecraftServerTask>("testPlugin") {
     dependsOn("build")
-    dependsOn(project(":bukkit-test").tasks.getByName("build"))
+    dependsOn(project(":tests:bukkit").tasks.getByName("build"))
 
     doFirst {
         copy {
@@ -32,7 +32,7 @@ task<LaunchMinecraftServerTask>("testPlugin") {
             into(buildDir.resolve("MinecraftServer/plugins"))
         }
         copy {
-            from(project(":bukkit-test").buildDir.resolve("libs/ExceptionTest.jar"))
+            from(project(":tests:bukkit").buildDir.resolve("libs/ExceptionTest.jar"))
             into(buildDir.resolve("MinecraftServer/plugins"))
         }
     }

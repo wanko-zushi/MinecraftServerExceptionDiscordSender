@@ -23,7 +23,7 @@ configure<BungeePluginDescription> {
 
 task<LaunchMinecraftServerTask>("testPlugin") {
     dependsOn("build")
-    dependsOn(project(":bungee-test").tasks.getByName("build"))
+    dependsOn(project(":tests:bungee").tasks.getByName("build"))
 
     doFirst {
         copy {
@@ -31,7 +31,7 @@ task<LaunchMinecraftServerTask>("testPlugin") {
             into(buildDir.resolve("MinecraftServer/plugins"))
         }
         copy {
-            from(project(":bungee-test").buildDir.resolve("libs/ExceptionTest.jar"))
+            from(project(":tests:bungee").buildDir.resolve("libs/ExceptionTest.jar"))
             into(buildDir.resolve("MinecraftServer/plugins"))
         }
     }

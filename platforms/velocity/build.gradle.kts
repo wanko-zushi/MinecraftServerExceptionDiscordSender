@@ -32,7 +32,7 @@ sourceSets {
 
 task<LaunchMinecraftServerTask>("testPlugin") {
     dependsOn("build")
-    dependsOn(project(":velocity-test").tasks.getByName("build"))
+    dependsOn(project(":tests:velocity").tasks.getByName("build"))
 
     doFirst {
         copy {
@@ -40,7 +40,7 @@ task<LaunchMinecraftServerTask>("testPlugin") {
             into(buildDir.resolve("MinecraftServer/plugins"))
         }
         copy {
-            from(project(":velocity-test").buildDir.resolve("libs/ExceptionTest.jar"))
+            from(project(":tests:velocity").buildDir.resolve("libs/ExceptionTest.jar"))
             into(buildDir.resolve("MinecraftServer/plugins"))
         }
     }

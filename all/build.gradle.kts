@@ -3,9 +3,9 @@ import dev.s7a.gradle.minecraft.server.tasks.LaunchMinecraftServerTask
 import dev.s7a.gradle.minecraft.server.tasks.LaunchMinecraftServerTask.*
 
 dependencies {
-    implementation(project(":bukkit"))
-    implementation(project(":bungee"))
-    implementation(project(":velocity"))
+    implementation(project(":platforms:bukkit"))
+    implementation(project(":platforms:bungee"))
+    implementation(project(":platforms:velocity"))
 }
 
 tasks.withType<ShadowJar> {
@@ -19,7 +19,7 @@ listOf(
 ).forEach { (name, url) ->
     task<LaunchMinecraftServerTask>("testPlugin$name") {
         dependsOn("build")
-        dependsOn(project(":${name.lowercase()}-test").tasks.getByName("build"))
+        dependsOn(project(":tests:${name.lowercase()}").tasks.getByName("build"))
 
         doFirst {
             copy {
@@ -27,7 +27,7 @@ listOf(
                 into(buildDir.resolve("MinecraftServer$name/plugins"))
             }
             copy {
-                from(project(":${name.lowercase()}-test").buildDir.resolve("libs/ExceptionTest.jar"))
+                from(project(":tests:${name.lowercase()}").buildDir.resolve("libs/ExceptionTest.jar"))
                 into(buildDir.resolve("MinecraftServer$name/plugins"))
             }
         }
