@@ -4,13 +4,13 @@ Handle exceptions thrown by your Minecraft server and notify them using Discord 
 
 ![](assets/discord.png)
 
-## Support platform
+## Support platforms
 
 - Bukkit
 - BungeeCord
 - Velocity
 
-## Configuration
+## Configurations
 
 ### Bukkit / BungeeCord
 
@@ -51,7 +51,7 @@ webhook_url = ""
 
 ### [v1.0.1](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.1)
 
-#### Fix
+#### Bug fix
 
 - Support StackOverflowException
   - Consider content limits for Discord webhooks
