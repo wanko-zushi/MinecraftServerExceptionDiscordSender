@@ -21,6 +21,7 @@ jobs:
             bungee/build/MinecraftServerExceptionDiscordSender-bungee.jar
             velocity/build/MinecraftServerExceptionDiscordSender-velocity.jar
   release:
+    needs: [build]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/')
     steps:
