@@ -2,6 +2,9 @@ rootProject.name = "MinecraftServerExceptionDiscordSender"
 
 include(
     ":bukkit",
+    ":bukkit-test",
     ":bungee",
-    ":velocity"
+    ":bungee-test",
+    ":velocity",
+    ":velocity-test"
 )

@@ -23,10 +23,15 @@ configure<BungeePluginDescription> {
 
 task<LaunchMinecraftServerTask>("testPlugin") {
     dependsOn("build")
+    dependsOn(project(":bungee-test").tasks.getByName("build"))
 
     doFirst {
         copy {
-            from(buildDir.resolve("libs/MinecraftServerExceptionDiscordSender.jar"))
+            from(buildDir.resolve("libs/MinecraftServerExceptionDiscordSender-bungee.jar"))
+            into(buildDir.resolve("MinecraftServer/plugins"))
+        }
+        copy {
+            from(project(":bungee-test").buildDir.resolve("libs/ExceptionTest.jar"))
             into(buildDir.resolve("MinecraftServer/plugins"))
         }
     }

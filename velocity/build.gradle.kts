@@ -33,10 +33,15 @@ sourceSets {
 
 task<LaunchMinecraftServerTask>("testPlugin") {
     dependsOn("build")
+    dependsOn(project(":velocity-test").tasks.getByName("build"))
 
     doFirst {
         copy {
-            from(buildDir.resolve("libs/MinecraftServerExceptionDiscordSender.jar"))
+            from(buildDir.resolve("libs/MinecraftServerExceptionDiscordSender-velocity.jar"))
+            into(buildDir.resolve("MinecraftServer/plugins"))
+        }
+        copy {
+            from(project(":velocity-test").buildDir.resolve("libs/ExceptionTest.jar"))
             into(buildDir.resolve("MinecraftServer/plugins"))
         }
     }

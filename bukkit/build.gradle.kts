@@ -24,10 +24,15 @@ configure<BukkitPluginDescription> {
 
 task<LaunchMinecraftServerTask>("testPlugin") {
     dependsOn("build")
+    dependsOn(project(":bukkit-test").tasks.getByName("build"))
 
     doFirst {
         copy {
-            from(buildDir.resolve("libs/MinecraftServerExceptionDiscordSender.jar"))
+            from(buildDir.resolve("libs/MinecraftServerExceptionDiscordSender-bukkit.jar"))
+            into(buildDir.resolve("MinecraftServer/plugins"))
+        }
+        copy {
+            from(project(":bukkit-test").buildDir.resolve("libs/ExceptionTest.jar"))
             into(buildDir.resolve("MinecraftServer/plugins"))
         }
     }

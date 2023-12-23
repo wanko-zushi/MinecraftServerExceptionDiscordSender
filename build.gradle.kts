@@ -35,12 +35,18 @@ subprojects {
         apply(plugin = libs.plugins.minecraft.server.get().pluginId)
     }
 
-    dependencies {
-        implementation(project(":"))
-    }
+    if (project.name.contains("-test")) {
+        tasks.withType<ShadowJar> {
+            archiveFileName.set("ExceptionTest.jar")
+        }
+    } else {
+        dependencies {
+            implementation(project(":"))
+        }
 
-    tasks.withType<ShadowJar> {
-        archiveFileName.set("MinecraftServerExceptionDiscordSender.jar")
+        tasks.withType<ShadowJar> {
+            archiveFileName.set("MinecraftServerExceptionDiscordSender-${project.name}.jar")
+        }
     }
 
     tasks.build {
