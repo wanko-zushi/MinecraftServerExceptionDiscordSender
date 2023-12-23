@@ -9,7 +9,7 @@ import dev.s7a.mseds.MinecraftServerExceptionDiscordSender;
 import java.io.IOException;
 import java.nio.file.Path;
 
-@Plugin(id = "minecraft-server-exception-discord-sender", name = "{name}", version = "{version}", authors = {"sya-ri"})
+@Plugin(id = "minecraft-server-exception-discord-sender", name = BuildConstants.NAME, version = BuildConstants.VERSION, authors = {"sya-ri"})
 public class MinecraftServerExceptionDiscordSenderPlugin {
     @Inject
     public MinecraftServerExceptionDiscordSenderPlugin(@DataDirectory Path dataFolder) {

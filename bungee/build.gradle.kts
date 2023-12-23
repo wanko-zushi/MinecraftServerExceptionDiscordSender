@@ -31,5 +31,5 @@ task<LaunchMinecraftServerTask>("testPlugin") {
         }
     }
 
-    jarUrl.set(JarUrl.Waterfall("1.19"))
+    jarUrl.set(JarUrl.Waterfall(libs.versions.waterfall.get()))
 }

@@ -15,10 +15,19 @@ dependencies {
     compileOnly(libs.config.toml)
 }
 
-tasks {
-    blossom {
-        replaceToken("{name}", rootProject.name, "src/main/java/dev/s7a/mseds/velocity/MinecraftServerExceptionDiscordSenderPlugin.java")
-        replaceToken("{version}", rootProject.version.toString(), "src/main/java/dev/s7a/mseds/velocity/MinecraftServerExceptionDiscordSenderPlugin.java")
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+sourceSets {
+    main {
+        blossom {
+            javaSources {
+                property("name", rootProject.name)
+                property("version", rootProject.version.toString())
+            }
+        }
     }
 }
 
@@ -32,5 +41,5 @@ task<LaunchMinecraftServerTask>("testPlugin") {
         }
     }
 
-    jarUrl.set(JarUrl.Velocity("3.1.1"))
+    jarUrl.set(JarUrl.Velocity(libs.versions.velocity.server.get()))
 }

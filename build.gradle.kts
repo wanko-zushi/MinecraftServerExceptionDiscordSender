@@ -4,6 +4,7 @@ plugins {
     id("java")
     alias(libs.plugins.shadow) apply false
     alias(libs.plugins.minecraft.server) apply false
+    id("com.github.ben-manes.versions") version "0.41.0"
 }
 
 group = "dev.s7a"

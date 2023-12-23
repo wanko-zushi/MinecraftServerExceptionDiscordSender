@@ -32,6 +32,6 @@ task<LaunchMinecraftServerTask>("testPlugin") {
         }
     }
 
-    jarUrl.set(JarUrl.Paper("1.19.2"))
+    jarUrl.set(JarUrl.Paper(libs.versions.paper.get()))
     agreeEula.set(true)
 }
