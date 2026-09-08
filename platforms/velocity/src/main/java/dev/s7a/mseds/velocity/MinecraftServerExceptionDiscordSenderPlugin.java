@@ -1,6 +1,8 @@
 package dev.s7a.mseds.velocity;
 
 import com.google.inject.Inject;
+import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import dev.s7a.mseds.InvalidWebhookUrlException;
@@ -11,6 +13,8 @@ import java.nio.file.Path;
 
 @Plugin(id = "minecraft-server-exception-discord-sender", name = BuildConstants.NAME, version = BuildConstants.VERSION, authors = {"sya-ri"})
 public class MinecraftServerExceptionDiscordSenderPlugin {
+    private MinecraftServerExceptionDiscordSender sender;
+
     @Inject
     public MinecraftServerExceptionDiscordSenderPlugin(@DataDirectory Path dataFolder) {
         Config config;
@@ -21,9 +25,15 @@ public class MinecraftServerExceptionDiscordSenderPlugin {
         }
         String url = config.getWebhookUrl();
         if (url != null && !url.isEmpty()) {
-            new MinecraftServerExceptionDiscordSender(url).setup();
+            sender = new MinecraftServerExceptionDiscordSender(url);
+            sender.setup();
         } else {
             throw new InvalidWebhookUrlException("webhook_url is empty. Please check config.toml");
         }
+    }
+
+    @Subscribe
+    public void onShutdown(ProxyShutdownEvent event) {
+        if (sender != null) sender.close();
     }
 }

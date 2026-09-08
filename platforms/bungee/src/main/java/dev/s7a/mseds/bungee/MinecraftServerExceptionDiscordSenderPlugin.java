@@ -8,6 +8,8 @@ import java.io.IOException;
 
 @SuppressWarnings("unused")
 public class MinecraftServerExceptionDiscordSenderPlugin extends Plugin {
+    private MinecraftServerExceptionDiscordSender sender;
+
     @Override
     public void onEnable() {
         Config config;
@@ -18,9 +20,15 @@ public class MinecraftServerExceptionDiscordSenderPlugin extends Plugin {
         }
         String url = config.getWebhookUrl();
         if (url != null && !url.isEmpty()) {
-            new MinecraftServerExceptionDiscordSender(url).setup();
+            sender = new MinecraftServerExceptionDiscordSender(url);
+            sender.setup();
         } else {
             throw new InvalidWebhookUrlException("webhook_url is empty. Please check config.yml");
         }
+    }
+
+    @Override
+    public void onDisable() {
+        if (sender != null) sender.close();
     }
 }

@@ -6,12 +6,11 @@ plugins {
     alias(libs.plugins.plugin.yml.bungee)
 }
 
-repositories {
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
-}
-
 dependencies {
-    compileOnly(libs.bungeecord.api)
+    compileOnly(libs.bungeecord.api) {
+        // This unused runtime fork was only published to the retired OSSRH snapshots repository.
+        exclude(group = "net.md-5", module = "brigadier")
+    }
 }
 
 configure<BungeePluginDescription> {
@@ -21,7 +20,7 @@ configure<BungeePluginDescription> {
     author = "sya-ri"
 }
 
-task<LaunchMinecraftServerTask>("testPlugin") {
+tasks.register<LaunchMinecraftServerTask>("testPlugin") {
     dependsOn("build")
     dependsOn(project(":tests:bungee").tasks.getByName("build"))
 
