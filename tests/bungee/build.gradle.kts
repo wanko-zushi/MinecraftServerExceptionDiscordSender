@@ -4,12 +4,10 @@ plugins {
     alias(libs.plugins.plugin.yml.bungee)
 }
 
-repositories {
-    maven("https://oss.sonatype.org/content/repositories/snapshots")
-}
-
 dependencies {
-    compileOnly(libs.bungeecord.api)
+    compileOnly(libs.bungeecord.api) {
+        exclude(group = "net.md-5", module = "brigadier")
+    }
 }
 
 configure<BungeePluginDescription> {

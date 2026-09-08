@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.s7a"
-version = "1.0.0-SNAPSHOT"
+version = "1.0.3"
 
 subprojects {
     apply(plugin = "java")
@@ -27,6 +27,10 @@ subprojects {
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    tasks.withType<JavaCompile>().configureEach {
+        options.encoding = "UTF-8"
     }
 
     tasks.build {

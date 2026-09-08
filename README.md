@@ -41,7 +41,18 @@ webhook_url = ""
 > - `MinecraftServerExceptionDiscordSender-bungee.jar` : Support BungeeCord only
 > - `MinecraftServerExceptionDiscordSender-velocity.jar` : Support Velocity only
 
-### [v1.0.2 (latest)](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.2)
+### [v1.0.3 (latest)](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.3)
+
+#### Bug fix
+
+- Send webhook notifications asynchronously
+- Add connection and read timeouts
+- Respect rate limits and retry once
+- Group duplicate exceptions for 60 seconds
+- Limit pending notifications to 128
+- Release notification resources when the server stops
+
+### [v1.0.2](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.2)
 
 #### Feature
 
@@ -61,6 +72,22 @@ webhook_url = ""
 - First release :tada:
 
 ## For developers
+
+### Build
+
+Use Java 21 and the Gradle wrapper.
+
+```shell
+./gradlew build
+```
+
+### Tests
+
+```shell
+./gradlew :common:test
+```
+
+The tests use local webhook endpoints.
 
 ### Project structure
 

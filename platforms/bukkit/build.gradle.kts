@@ -22,7 +22,7 @@ configure<BukkitPluginDescription> {
     apiVersion = "1.13"
 }
 
-task<LaunchMinecraftServerTask>("testPlugin") {
+tasks.register<LaunchMinecraftServerTask>("testPlugin") {
     dependsOn("build")
     dependsOn(project(":tests:bukkit").tasks.getByName("build"))
 

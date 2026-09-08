@@ -30,7 +30,7 @@ sourceSets {
     }
 }
 
-task<LaunchMinecraftServerTask>("testPlugin") {
+tasks.register<LaunchMinecraftServerTask>("testPlugin") {
     dependsOn("build")
     dependsOn(project(":tests:velocity").tasks.getByName("build"))
 

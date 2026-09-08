@@ -12,12 +12,12 @@ tasks.withType<ShadowJar> {
     archiveFileName.set("MinecraftServerExceptionDiscordSender.jar")
 }
 
-listOf(
-    "Bukkit" to JarUrl.Paper(libs.versions.paper.get()),
-    "Bungee" to JarUrl.Waterfall(libs.versions.waterfall.get()),
-    "Velocity" to JarUrl.Velocity(libs.versions.velocity.server.get())
+listOf<Pair<String, () -> String>>(
+    "Bukkit" to { JarUrl.Paper(libs.versions.paper.get()) },
+    "Bungee" to { JarUrl.Waterfall(libs.versions.waterfall.get()) },
+    "Velocity" to { JarUrl.Velocity(libs.versions.velocity.server.get()) }
 ).forEach { (name, url) ->
-    task<LaunchMinecraftServerTask>("testPlugin$name") {
+    tasks.register<LaunchMinecraftServerTask>("testPlugin$name") {
         dependsOn("build")
         dependsOn(project(":tests:${name.lowercase()}").tasks.getByName("build"))
 
@@ -33,7 +33,7 @@ listOf(
         }
 
         serverDirectory.set(buildDir.resolve("MinecraftServer$name").toString())
-        jarUrl.set(url)
+        jarUrl.set(url())
         agreeEula.set(true)
     }
 }
