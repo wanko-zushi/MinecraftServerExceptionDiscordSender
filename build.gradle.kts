@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.s7a"
-version = "1.0.0-hotfix.1"
+version = "1.0.3"
 
 subprojects {
     apply(plugin = "java")

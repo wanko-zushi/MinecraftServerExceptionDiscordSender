@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 final class HttpWebhookTransport implements WebhookTransport {
     private static final int CONNECT_TIMEOUT_MILLIS = 3000;
     private static final int READ_TIMEOUT_MILLIS = 5000;
-    // Only the small retry_after field is needed from error responses.
     private static final int RESPONSE_LIMIT = 8192;
     private final URL url;
     private volatile HttpURLConnection active;
@@ -53,7 +52,7 @@ final class HttpWebhookTransport implements WebhookTransport {
                 try {
                     response = readError(connection.getErrorStream());
                 } catch (IOException ignored) {
-                    // An incomplete body must not discard an already received Retry-After header.
+                    // use Retry-After when the response body is incomplete
                 }
                 retryNanos = retryAfterNanos(connection.getHeaderField("Retry-After"), response);
             }
@@ -90,7 +89,7 @@ final class HttpWebhookTransport implements WebhookTransport {
             if (json.has("retry_after")) seconds = Math.max(seconds, parseSeconds(json.get("retry_after").getAsString()));
         } catch (RuntimeException ignored) { }
         if (seconds < 0) seconds = 1;
-        // Keep nanoTime subtraction valid even for an invalidly enormous response value.
+        // avoid overflow in cooldown calculations
         return (long) Math.min(seconds * TimeUnit.SECONDS.toNanos(1), Long.MAX_VALUE / 4.0);
     }
 

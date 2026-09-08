@@ -8,7 +8,6 @@ plugins {
 
 dependencies {
     compileOnly(libs.bungeecord.api) {
-        // This unused runtime fork was only published to the retired OSSRH snapshots repository.
         exclude(group = "net.md-5", module = "brigadier")
     }
 }

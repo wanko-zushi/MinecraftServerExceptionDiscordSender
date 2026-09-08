@@ -23,10 +23,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 import java.util.function.LongSupplier;
 
-/** Sends exception notifications without performing network I/O on logging threads. */
 public class MinecraftServerExceptionDiscordSender implements AutoCloseable {
     private static final String SENDER_NAME = "MinecraftServerExceptionDiscordSender";
-    // Bounds retained notification memory and the number of distinct deduplication keys.
     private static final int QUEUE_CAPACITY = 128;
     private static final int RECENT_CAPACITY = 1024;
     private static final long DEDUPLICATION_NANOS = TimeUnit.SECONDS.toNanos(60);
@@ -56,7 +54,6 @@ public class MinecraftServerExceptionDiscordSender implements AutoCloseable {
         this(createTransport(url), System.err::println);
     }
 
-    // The transport seam keeps tests entirely separate from production webhooks.
     MinecraftServerExceptionDiscordSender(WebhookTransport transport, Consumer<String> diagnostic) {
         this(transport, diagnostic, System::nanoTime);
     }
@@ -75,7 +72,7 @@ public class MinecraftServerExceptionDiscordSender implements AutoCloseable {
             }
             return new HttpWebhookTransport(url);
         } catch (MalformedURLException e) {
-            // MalformedURLException messages can contain the secret URL.
+            // hide webhook URL
             throw new InvalidWebhookUrlException("webhook_url is not a valid HTTPS URL");
         }
     }
@@ -129,7 +126,6 @@ public class MinecraftServerExceptionDiscordSender implements AutoCloseable {
                 suppressed.incrementAndGet();
                 return;
             }
-            // Never run the HTTP task on the caller or wait for queue space.
             if (!queue.offer(content)) {
                 dropped.incrementAndGet();
                 return;
@@ -167,7 +163,7 @@ public class MinecraftServerExceptionDiscordSender implements AutoCloseable {
                 failed.incrementAndGet();
                 return;
             } catch (IOException | RuntimeException ignored) {
-                // Neither the message nor the cause is safe to log: both may contain the webhook token.
+                // hide webhook URL
                 if (running) failed.incrementAndGet();
                 return;
             }
@@ -194,11 +190,11 @@ public class MinecraftServerExceptionDiscordSender implements AutoCloseable {
         reportedSuppressed = suppressedCount;
         reportedFailed = failedCount;
         try {
-            // No Throwable is attached, so this cannot recursively create an exception notification.
+            // avoid recursive notifications
             diagnostic.accept(SENDER_NAME + ": notifications dropped=" + droppedCount
                     + ", duplicates=" + suppressedCount + ", failed=" + failedCount);
         } catch (RuntimeException ignored) {
-            // A diagnostic sink must not terminate the notification worker.
+            // ignore diagnostic errors
         }
     }
 

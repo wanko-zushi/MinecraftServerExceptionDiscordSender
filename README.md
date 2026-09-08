@@ -10,40 +10,6 @@ Handle exceptions thrown by your Minecraft server and notify them using Discord 
 - BungeeCord
 - Velocity
 
-## Nonblocking notification hotfix
-
-`1.0.0-hotfix.1` keeps the existing webhook configuration. Logging threads only format
-an immutable message of at most 2,000 characters and offer it to a queue of at most
-128 messages; they never perform HTTP I/O or wait for queue capacity. A single
-daemon worker sends notifications. Identical formatted exceptions are aggregated
-for 60 seconds; the recent-message cache is bounded to 1,024 entries.
-
-HTTP connections use a 3-second connect timeout and a 5-second read timeout.
-HTTP 429 honors `Retry-After` / Discord's `retry_after`, with at most one retry per
-notification. A second 429 also delays the next queued notification. Queue overflow
-discards the new notification. Plain, rate-limited local counters report discarded,
-aggregated, and failed notifications without recording the webhook URL or throwing
-notification failures back into the logging thread. Other server logging is unchanged.
-
-`setup()` is idempotent. The sender implements `AutoCloseable`; `close()` stops
-accepting notifications, removes its appenders, discards waiting notifications,
-cancels active HTTP I/O, and stops its worker. Bukkit, BungeeCord, and Velocity invoke
-this cleanup during shutdown. An already closed sender cannot be restarted; create
-a new instance after closing it.
-
-Build and run the regression tests with Java 21 and the existing Gradle 8.5 wrapper:
-
-```shell
-./gradlew --no-daemon :common:test build
-```
-
-The tests use local mock endpoints, including stalled responses, 429, queue overflow,
-and shutdown; no production Discord request is made. The legacy test-server download
-tasks are configured lazily so normal builds do not call the retired Paper download
-API. The unavailable BungeeCord 1.19 snapshot is replaced by the published 1.20-R0.1
-compile-only API, excluding its unavailable and unused Brigadier snapshot. Neither
-is bundled in any plugin. Other existing dependency versions are preserved.
-
 ## Configurations
 
 ### Bukkit / BungeeCord
@@ -75,7 +41,18 @@ webhook_url = ""
 > - `MinecraftServerExceptionDiscordSender-bungee.jar` : Support BungeeCord only
 > - `MinecraftServerExceptionDiscordSender-velocity.jar` : Support Velocity only
 
-### [v1.0.2 (latest)](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.2)
+### [v1.0.3 (latest)](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.3)
+
+#### Bug fix
+
+- Send webhook notifications asynchronously
+- Add connection and read timeouts
+- Respect rate limits and retry once
+- Group duplicate exceptions for 60 seconds
+- Limit pending notifications to 128
+- Release notification resources when the server stops
+
+### [v1.0.2](https://github.com/wanko-zushi/MinecraftServerExceptionDiscordSender/releases/tag/1.0.2)
 
 #### Feature
 
@@ -95,6 +72,22 @@ webhook_url = ""
 - First release :tada:
 
 ## For developers
+
+### Build
+
+Use Java 21 and the Gradle wrapper.
+
+```shell
+./gradlew build
+```
+
+### Tests
+
+```shell
+./gradlew :common:test
+```
+
+The tests use local webhook endpoints.
 
 ### Project structure
 
